@@ -1,7 +1,8 @@
 public abstract class Price {
     public abstract int getPriceCode();
+    
 
-    public double getCharge(int daysRented) {
+    public abstract double getCharge(int daysRented) {
         double thisAmount = 0;
 
         switch (getPriceCode()) {
@@ -22,5 +23,7 @@ public abstract class Price {
                 break;
         }
         return thisAmount;
+        
     }
+    
  }
