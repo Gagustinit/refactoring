@@ -20,28 +20,28 @@ public class Customer {
    public String statement() {
       double totalAmount = 0;
       int frequentRenterPoints = 0;
-      Enumeration<Rental> rentals = _rentals.elements(); 
+      Enumeration<Rental> rentals = _rentals.elements();
       String result = "Rental Record for " + getName() + "\n";
-
       while (rentals.hasMoreElements()) {
-         Rental each = rentals.nextElement();
-         double thisAmount = each.getCharge();
-         // Adiciona pontos de locação frequente
-         frequentRenterPoints++;
-          // Adiciona bônus para nova locação de lançamento por mais de um dia
+         Rental each = (Rental) rentals.nextElement();
+   
+         // add frequent renter points
+         frequentRenterPoints ++;
+         // add bonus for a two day new release rental
          if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) &&
-            each.getDaysRented() > 1) frequentRenterPoints++;
-            // Mostra valores para esta locação
-            result += "\t" + each.getMovie().getTitle() + "\t" +
-            String.valueOf(thisAmount) + "\n";
-            totalAmount += thisAmount;
-                 
+            each.getDaysRented() > 1) frequentRenterPoints ++;
+   
+         // show figures for this rental
+         result += "\t" + each.getMovie().getTitle()+ "\t" + String.valueOf
+            (each.getCharge()) + "\n";
+         totalAmount += each.getCharge();
+   
       }
-         
-      // Adiciona linhas de rodapé
-      result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
-      result += "You earned " + String.valueOf(frequentRenterPoints) +
-            " frequent renter points";
+      
+      // add footer lines
+      result +=  "Amount owed is " + String.valueOf(totalAmount) + "\n";
+      result += "You earned " + String.valueOf(frequentRenterPoints)
+                 + " frequent renter points";
       return result;
    }
          
