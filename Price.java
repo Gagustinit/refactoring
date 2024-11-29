@@ -26,11 +26,7 @@ public abstract class Price {
         
     }
     public int getFrequentRenterPoints(int daysRented) {
-       
-        if (getPriceCode() == Movie.NEW_RELEASE && daysRented > 1) {
-            return 2;  
-        }
-        return 1; 
+        return 1;
     }
     
  }
