@@ -1,7 +1,7 @@
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class Statement {
+public abstract class Statement {
     
     private Vector<Rental> _rentals;  // Lista de locações
     
@@ -9,34 +9,31 @@ public class Statement {
         _rentals = rentals;  // Inicializa a lista de locações
     }
 
-    // Método para obter o nome do cliente (presumido)
-    public String getName() {
-        return "Customer Name";  // Exemplo, substitua pelo método real para obter o nome do cliente
-    }
+    // Método template para gerar o statement
+    public String value(Customer aCustomer) {
+        Enumeration<Rental> rentals = aCustomer.getRentals();
+        String result = createHeader(aCustomer);  // Cabeçalho
 
-    // Método que gera o statement
-    public String statement() {
-        Enumeration<Rental> rentals = _rentals.elements();
-        String result = "Rental Record for " + getName() + "\n";
-        
-        // Itera pelas locações e exibe informações sobre cada uma
         while (rentals.hasMoreElements()) {
-            Rental each = rentals.nextElement();
-            
-            // Mostra os valores para esta locação
-            result += "\t" + each.getMovie().getTitle() + "\t" +
-                      String.valueOf(each.getCharge()) + "\n";
+            Rental each = (Rental) rentals.nextElement();
+            result += createRentalLine(each);  // Linha de locação
         }
 
-        // Adiciona linhas de rodapé
-        result += "Amount owed is " + String.valueOf(getTotalCharge()) + "\n";
-        result += "You earned " + String.valueOf(getTotalFrequentRenterPoints()) +
-                  " frequent renter points";
+        result += createFooter(aCustomer);  // Rodapé
         return result;
     }
 
-    // Calcula o total a ser pago
-    private double getTotalCharge() {
+    // Método abstrato para criar o cabeçalho
+    protected abstract String createHeader(Customer aCustomer);
+
+    // Método abstrato para formatar cada linha de locação
+    protected abstract String createRentalLine(Rental each);
+
+    // Método abstrato para criar o rodapé
+    protected abstract String createFooter(Customer aCustomer);
+
+    // Métodos de cálculo do total
+    protected double getTotalCharge() {
         double totalCharge = 0;
         Enumeration<Rental> rentals = _rentals.elements();
         
@@ -48,8 +45,7 @@ public class Statement {
         return totalCharge;
     }
 
-    // Calcula o total de pontos de frequent renter
-    private int getTotalFrequentRenterPoints() {
+    protected int getTotalFrequentRenterPoints() {
         int totalPoints = 0;
         Enumeration<Rental> rentals = _rentals.elements();
         
@@ -61,4 +57,3 @@ public class Statement {
         return totalPoints;
     }
 }
-
