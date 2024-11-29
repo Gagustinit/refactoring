@@ -18,10 +18,10 @@ public class Customer {
    }
 
    public String statement() {
-      Enumeration<Rental> rentals = _rentals.elements();  // Correção aqui
+      Enumeration<Rental> rentals = _rentals.elements();  
       String result = "Rental Record for " + getName() + "\n";
       while (rentals.hasMoreElements()) {
-         Rental each = rentals.nextElement();  // Correção aqui
+         Rental each = rentals.nextElement();  
 
          // Mostra os valores para esta locação
          result += "\t" + each.getMovie().getTitle() + "\t" +
@@ -37,7 +37,7 @@ public class Customer {
 
    private double getTotalCharge() {
       double result = 0;
-      Enumeration<Rental> rentals = _rentals.elements();  // Correção aqui
+      Enumeration<Rental> rentals = _rentals.elements();  
       while (rentals.hasMoreElements()) {
          Rental each = rentals.nextElement();
          result += each.getCharge();
@@ -47,11 +47,28 @@ public class Customer {
 
    private int getTotalFrequentRenterPoints() {
       int result = 0;
-      Enumeration<Rental> rentals = _rentals.elements();  // Correção aqui
+      Enumeration<Rental> rentals = _rentals.elements();  
       while (rentals.hasMoreElements()) {
          Rental each = rentals.nextElement();
          result += each.getFrequentRenterPoints();
       }
+      return result;
+   }
+   public String htmlStatement() {
+      Enumeration<Rental> rentals = _rentals.elements();
+      String result = "<H1>Rentals for <EM>" + getName() + "</EM></H1><P>\n";
+      while (rentals.hasMoreElements()) {
+         Rental each = (Rental) rentals.nextElement();
+         // show figures for each rental
+         result += each.getMovie().getTitle()+ ": " +
+                  String.valueOf(each.getCharge()) + "<BR>\n";
+      }
+      
+      // add footer lines
+      result +=  "<P>You owe <EM>" + String.valueOf(getTotalCharge()) + "</EM><P>\n";
+      result += "On this rental you earned <EM>" +
+            String.valueOf(getTotalFrequentRenterPoints()) +
+            "</EM> frequent renter points<P>";
       return result;
    }
 }
