@@ -24,47 +24,27 @@ public class Customer {
       String result = "Rental Record for " + getName() + "\n";
 
       while (rentals.hasMoreElements()) {
-         Rental aRental = rentals.nextElement();
-         double thisAmount = amountFor(aRental); 
-
+         Rental each = rentals.nextElement();
+         double thisAmount = each.getCharge();
          // Adiciona pontos de locação frequente
          frequentRenterPoints++;
-         // Adiciona bônus para nova locação de lançamento por mais de um dia
-         if ((aRental.getMovie().getPriceCode() == Movie.NEW_RELEASE) &&
-            aRental.getDaysRented() > 1) frequentRenterPoints++;
-
-         // Mostra valores para esta locação
-         result += "\t" + aRental.getMovie().getTitle() + "\t" +
+          // Adiciona bônus para nova locação de lançamento por mais de um dia
+         if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) &&
+            each.getDaysRented() > 1) frequentRenterPoints++;
+            // Mostra valores para esta locação
+            result += "\t" + each.getMovie().getTitle() + "\t" +
             String.valueOf(thisAmount) + "\n";
-         totalAmount += thisAmount;
+            totalAmount += thisAmount;
+                 
       }
-
+         
       // Adiciona linhas de rodapé
       result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
       result += "You earned " + String.valueOf(frequentRenterPoints) +
-             " frequent renter points";
+            " frequent renter points";
       return result;
    }
+         
+         
 
-   // Determina o valor para cada locação
-   private double amountFor(Rental aRental) {
-      double thisAmount = 0;  
-
-      switch (aRental.getMovie().getPriceCode()) {
-         case Movie.REGULAR:
-            thisAmount += 2;
-            if (aRental.getDaysRented() > 2)
-               thisAmount += (aRental.getDaysRented() - 2) * 1.5;
-            break;
-         case Movie.NEW_RELEASE:
-            thisAmount += aRental.getDaysRented() * 3;
-            break;
-         case Movie.CHILDRENS:
-            thisAmount += 1.5;
-            if (aRental.getDaysRented() > 3)
-               thisAmount += (aRental.getDaysRented() - 3) * 1.5;
-            break;
-      }
-      return thisAmount;  
-   }
 }
