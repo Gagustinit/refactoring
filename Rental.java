@@ -15,27 +15,10 @@ public class Rental {
       return _daysRented;
    }
 
-   // Método movido e renomeado corretamente
-   public double getCharge() {
-      double thisAmount = 0;  
-
-      switch (_movie.getPriceCode()) {
-         case Movie.REGULAR:
-            thisAmount += 2;
-            if (_daysRented > 2)
-               thisAmount += (_daysRented - 2) * 1.5;
-            break;
-         case Movie.NEW_RELEASE:
-            thisAmount += _daysRented * 3;
-            break;
-         case Movie.CHILDRENS:
-            thisAmount += 1.5;
-            if (_daysRented > 3)
-               thisAmount += (_daysRented - 3) * 1.5;
-            break;
-      }
-      return thisAmount;  // Retorna o valor calculado
+   public double getCharge(){
+      return _movie.getCharge(_daysRented);
    }
+  
    // Novo método extraído para calcular os pontos
    public int getFrequentRenterPoints() {
       // Adiciona bônus para nova locação de lançamento por mais de um dia
