@@ -18,13 +18,9 @@ public class Rental {
    public double getCharge(){
       return _movie.getCharge(_daysRented);
    }
-  
-   // Novo método extraído para calcular os pontos
-   public int getFrequentRenterPoints() {
-      // Adiciona bônus para nova locação de lançamento por mais de um dia
-      if ((_movie.getPriceCode() == Movie.NEW_RELEASE) && _daysRented > 1) {
-         return 2;  // Bônus de 2 pontos
-      }
-      return 1;  // Caso padrão: 1 ponto
+
+   public int getFrequentRenterPoints(){
+      return _movie.getFrequentRenterPoints(_daysRented);
    }
+   
 }
